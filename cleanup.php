@@ -1,4 +1,5 @@
 <?php
+
 /**
  * cleanup.php — Bersihkan file upload & output yang sudah kedaluwarsa.
  *
@@ -88,7 +89,7 @@ $errorCount = 0;
 logLine("{$label}Memulai cleanup. Max-age: {$maxAge} detik (" . round($maxAge / 60, 1) . " menit).", $noLog);
 
 foreach ($dirs as $dir) {
-    $files = glob($dir . '*');
+    $files = glob($dir . '/*');
     if ($files === false) {
         logLine("ERROR: Gagal membaca direktori {$dir}", $noLog);
         $errorCount++;

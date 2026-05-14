@@ -186,9 +186,24 @@ function convertToImage($filePath, $filePrefix, $quality, $dpi, $ext, $outputFor
                 foreach ($found as $f) $outputImages[] = basename($f);
             }
         }
-        array_map('unlink', glob($loProfile . '/*') ?: []);
+        // Cleanup LibreOffice profile
+        foreach (glob($loProfile . '/*') ?: [] as $item) {
+            if (is_file($item)) {
+                @unlink($item);
+            } elseif (is_dir($item)) {
+                exec('rm -rf ' . escapeshellarg($item));
+            }
+        }
         @rmdir($loProfile);
-        array_map('unlink', glob($tmpOut . '/*') ?: []);
+
+        // Cleanup temporary output
+        foreach (glob($tmpOut . '/*') ?: [] as $item) {
+            if (is_file($item)) {
+                @unlink($item);
+            } elseif (is_dir($item)) {
+                exec('rm -rf ' . escapeshellarg($item));
+            }
+        }
         @rmdir($tmpOut);
     }
     return $outputImages;
@@ -1306,6 +1321,20 @@ function mergeImages($imagePaths, $originName, $outputFormat = 'jpg', $quality =
         <?php endif; ?>
 
     </div><!-- /container -->
+
+    <!-- FOOTER -->
+    <footer style="
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 20px 24px 36px;
+        font-size: .8rem;
+        color: var(--text3);
+        font-family: 'JetBrains Mono', monospace;
+        letter-spacing: .04em;
+    ">
+        made with <span style="color: #f56565;">❤</span> by Rifki hehe
+    </footer>
 
     <script>
         // Sliders

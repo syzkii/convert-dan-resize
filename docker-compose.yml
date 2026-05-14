@@ -1,0 +1,10 @@
+services:
+  converter:
+    image: converter-app:latest
+
+    container_name: converter
+
+    restart: unless-stopped
+
+    ports:
+      - "8080:80"
